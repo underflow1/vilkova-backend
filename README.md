@@ -28,6 +28,7 @@ After=network.target
 [Service]
 Environment="SENDGRID_API_KEY=YOUR_API_KEY"
 Environment="SHOP_EMAIL=email@email.ru"
+Environment="TEST_EMAIL=email@test.ru"
 
 [Service]
 User=vilkova
