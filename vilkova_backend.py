@@ -64,6 +64,38 @@ def hello():
 
     return {"code": "OK"}
 
+@app.route("/api/vilkova-test-email", methods=['GET'])
+def testemail():
+    message = {
+        'personalizations': [
+            {
+                'to': [
+                    {
+                        'email': os.environ.get('TEST_EMAIL')
+                    }
+                ],
+                'subject': 'VILKOVA.RU: проверка отправки писем'
+            }
+        ],
+        'from': {
+            'email': 'no-reply@vilkova.ru'
+        },
+        'content': [
+            {
+                'type': 'text/html',
+                'value': 'это тест!'
+            }
+        ]
+    }
+    try:
+        sg = sendgrid.SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+        response = sg.send(message)
+    except Exception as e:
+        print(str(e))
+
+    return {"code": "OK"}
+
+
 @app.route("/api/vilkova-book-info", methods=['GET'])
 def info():
     con = sqlite3.connect(DATABASE)
